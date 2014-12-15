@@ -4,14 +4,17 @@ import java.util.ArrayList;
  * Created by Snake on 12/14/2014.
  */
 public class MyEdge implements Edge {
+
+    private int element;
+
     @Override
     public int getElement() {
-        return 0;
+        return element;
     }
 
     @Override
     public void setElement(int e) {
-
+        element = e;
     }
 
     @Override

@@ -1,24 +1,29 @@
 /**
- * Created by Snake on 12/14/2014.
+ * A pair of X and Y values.
  */
 public class MyPair implements Pair {
+
+    private int x;
+    private int y;
+
+
     @Override
     public int getX() {
-        return 0;
+        return x;
     }
 
     @Override
     public void setX(int newVal) {
-
+        x = newVal;
     }
 
     @Override
     public int getY() {
-        return 0;
+        return y;
     }
 
     @Override
     public void setY(int newVal) {
-
+        y = newVal;
     }
 }

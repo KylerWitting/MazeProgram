@@ -6,6 +6,14 @@ import java.util.ArrayList;
 public class MyVertex implements Vertex {
 
     private Pair element;
+    ArrayList<Edge> myEdges;
+	ArrayList<Vertex> myVertices;
+	
+	public MyVertex ( ) {
+		myEdges = new ArrayList<Edge>( );
+		myVertices = new ArrayList<Vertex>( );
+		element = new Pair( );
+	}
 
 //    public MyVertex (MyGraph parent) {
 //        this.parent = parent;
@@ -23,11 +31,11 @@ public class MyVertex implements Vertex {
 
     @Override
     public ArrayList<Edge> incidentEdges() {
-        return null;
+        return myEdges;
     }
 
     @Override
     public ArrayList<Vertex> adjacentVertices() {
-        return null;
+        return myVertices;
     }
 }

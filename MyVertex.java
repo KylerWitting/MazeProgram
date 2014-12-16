@@ -9,27 +9,44 @@ public class MyVertex implements Vertex {
     ArrayList<Edge> myEdges;
 	ArrayList<Vertex> myVertices;
 	
+	/**
+	 * constructor for MyVertex
+	 */
 	public MyVertex ( ) {
 		myEdges = new ArrayList<Edge>( );
 		myVertices = new ArrayList<Vertex>( );
 		element = new MyPair( );
 	}
 
+	/**
+	 * gets the element of MyVertex (the x/y location)
+	 * @return the element of MyVertex
+	 */
     @Override
     public Pair getElement() {
         return element;
     }
 
+    /**
+     * sets the element of MyVertex
+     * @param the new pair to be added to MyVertex
+     */
     @Override
     public void setElement(Pair e) {
         element = e;
     }
 
+    /**
+     * @return the incident edges to this vertex
+     */
     @Override
     public ArrayList<Edge> incidentEdges() {
         return myEdges;
     }
 
+    /**
+     * @return the adjacent vertices to this MyVertex
+     */
     @Override
     public ArrayList<Vertex> adjacentVertices() {
         return myVertices;

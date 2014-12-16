@@ -12,12 +12,8 @@ public class MyVertex implements Vertex {
 	public MyVertex ( ) {
 		myEdges = new ArrayList<Edge>( );
 		myVertices = new ArrayList<Vertex>( );
-		element = new Pair( );
+		element = new MyPair( );
 	}
-
-//    public MyVertex (MyGraph parent) {
-//        this.parent = parent;
-//    }
 
     @Override
     public Pair getElement() {

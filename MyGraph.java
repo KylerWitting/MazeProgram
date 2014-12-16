@@ -37,7 +37,7 @@ public class MyGraph implements Graph {
     }
 
     @Override
-    public boolean removeVertex( Vertex v ) {
+    public boolean removeVertex( Vertex v1 ) {
     	if ( myVertices.contains( v1 ) ) {
 			for ( int i = 0; i < v1.adjacentVertices().size(); i++ ) {
 				Vertex v2 = v1.adjacentVertices().get( i );

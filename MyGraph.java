@@ -1,4 +1,5 @@
-import java.util.ArrayList;
+import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created by Snake on 12/14/2014.
@@ -26,18 +27,19 @@ public class MyGraph implements Graph {
 
     /**
      * Creates a new vertex in this MyGraph
-     * @param the pair to create the new vertex from
+     * @param p the pair to create the new vertex from
      * @return the vertex that was created 
      */
     @Override
     public Vertex addVertex( Pair p ) {
-    	//TODO
-    	return null;
+    	Vertex vert = new MyVertex();
+		vert.setElement(p);
+    	return vert;
     }
 
     /**
      * Creates a new vertex in this MyGraph using a Vertex
-     * @param The vertex to add
+     * @param v The vertex to add
      * @return the Vertex that was added
      */
     @Override
@@ -49,18 +51,35 @@ public class MyGraph implements Graph {
 
     /**
      * removes a vertex from MyGraph using a pair
-     * @param the pair of the vertex to remove from MyGraph
+     * @param p the pair of the vertex to remove from MyGraph
      * @return true if the vertex was removed
      */
     @Override
     public boolean removeVertex( Pair p ) {
-    	//TODO
-    	return false;
+		Vertex found = null;
+		for(Vertex vert : myVertices) {
+			if(vert.getElement().equals(p)) {
+				found = vert;
+				break;
+			}
+		}
+		if (found != null) {
+			for ( int i = 0; i < found.adjacentVertices().size(); i++ ) {
+				Vertex v2 = found.adjacentVertices().get( i );
+				v2.adjacentVertices().remove( found );
+				v2.incidentEdges().remove( findEdge( found, v2 ) );
+				myEdges.remove( findEdge( found, v2) );
+			}
+		}
+		else {
+			return false;
+		}
+		return myVertices.remove( found );
     }
 
     /**
      * removes a vertex from MyGraph
-     * @param the vertex to be removed 
+     * @param v1 the vertex to be removed
      * @return true if the vertex was removed 
      */
     @Override
@@ -78,12 +97,16 @@ public class MyGraph implements Graph {
 
     /**
      * finds the vertex in the graph by using a pair 
-     * @param the pair of the vertex you are trying to find
+     * @param p the pair of the vertex you are trying to find
      * @return the vertex that was found 
      */
     @Override
     public Vertex findVertex( Pair p ) {
-    	//TODO
+		for(Vertex vert : myVertices) {
+			if(vert.getElement().equals(p)) {
+				return vert;
+			}
+		}
         return null;
     }
 
@@ -97,7 +120,7 @@ public class MyGraph implements Graph {
 
     /**
      * adds and edge to MyGraph using 2 vertices
-     * @param the vertices that the new edge will be created from 
+     * @param v1 the vertices that the new edge will be created from
      * @return the edge that was created 
      */
     @Override
@@ -119,7 +142,7 @@ public class MyGraph implements Graph {
 
     /**
      * adds an edge to MyGraph using an edge
-     * @param the edge to add 
+     * @param e the edge to add
      * @return the edge that was added
      */
     @Override
@@ -132,7 +155,7 @@ public class MyGraph implements Graph {
 
     /**
      * removes an edge from the graph
-     * @param the vertices that will indicate the edge to remove 
+	 * @paramv1 the vertices that will indicate the edge to remove
      * @return true if edge was removed
      */
     @Override
@@ -152,7 +175,7 @@ public class MyGraph implements Graph {
 
     /**
      * removes an edge from MyGraph
-     * @param the edge to remove 
+     * @param e the edge to remove
      * @return true if the edge was removed
      */
     @Override
@@ -168,7 +191,7 @@ public class MyGraph implements Graph {
 
     /**
      * finds an edge in MyGraph
-     * @param the vertices that make up the edge to find
+     * @param v1 the vertices that make up the edge to find
      * @return the edge that was found 
      */
     @Override
@@ -182,7 +205,7 @@ public class MyGraph implements Graph {
 
     /**
      * checks to see if the two vertices are connected by an edge
-     * @param the 2 vertices to be checked
+     * @param v1 the 2 vertices to be checked
      * @return true if the vertices are connected 
      */
     @Override
@@ -212,12 +235,49 @@ public class MyGraph implements Graph {
 
     /**
      * finds the shortest path between 2 vertices 
-     * @param the vertices to find the path between
+     * @param v1 the vertices to find the path between
      * @return ArrayList of vertices that are the shortest path between 2 vertices 
      */
     @Override
     public ArrayList<Vertex> shortestPath( Vertex v1, Vertex v2 ) {
-    	//TODO
+		Map<Vertex,Integer> distance = new HashMap<Vertex, Integer>();
+		Map<Vertex,Vertex> previous = new HashMap<Vertex, Vertex>();
+
+		Queue<Vertex> queue = new ArrayDeque<Vertex>();
+
+		for (Vertex vert : myVertices) {
+			if (!vert.equals(v1)) {
+				distance.put(vert, Integer.MAX_VALUE);
+				previous.put(vert,null);
+			}
+			else {
+				distance.put(vert, 0);
+			}
+			queue.add(vert);
+		}
+
+		while (!queue.isEmpty()) {
+			Vertex current = queue.remove();
+			if (current.equals(v2)) {
+				ArrayList<Vertex> retVal = new ArrayList<Vertex>();
+				while (previous.get(current) != null) {
+					retVal.add(0, current);
+					current = previous.get(current);
+				}
+				retVal.add(0, v1);
+				return retVal;
+			}
+
+			for (Vertex adjacent: current.adjacentVertices()) {
+				//System.out.println(adjacent + " " + current);
+				if (distance.get(current) + 1 < distance.get(adjacent)) {
+					distance.put(adjacent, distance.get(current) + 1);
+					previous.put(adjacent, current);
+					queue.add(adjacent);
+				}
+			}
+		}
+
         return null;
     }
 
@@ -226,7 +286,56 @@ public class MyGraph implements Graph {
      */
     @Override
     public Graph minimumSpanningTree( ) {
-    	//TODO
-        return null;
-    }
+
+		//List<Vertex> vertices = new ArrayList<Vertex>(myVertices);
+
+		Graph retVal = new MyGraph();
+
+		Map.Entry<Vertex,Vertex> current = new AbstractMap.SimpleEntry<Vertex, Vertex>(myVertices.get(0),null);
+
+		HashSet<Vertex> remaining = new HashSet<Vertex> (myVertices);
+
+		Stack<Map.Entry<Vertex,Vertex>> stack = new Stack<Map.Entry<Vertex, Vertex>>();
+		stack.push(current);
+
+		//remaining.remove(current);
+
+		while(!stack.isEmpty()) {
+			current = stack.pop();
+			if(remaining.contains(current.getKey())) {
+				remaining.remove(current.getKey());
+				retVal.addVertex(current.getKey());
+				if(current.getValue()!=null) {
+					retVal.addEdge(current.getKey(),current.getValue());
+				}
+				for(Vertex vert: current.getKey().adjacentVertices()) {
+					stack.push(new AbstractMap.SimpleEntry<Vertex, Vertex>(vert,current.getKey()));
+				}
+			}
+ 		}
+
+		//minimumSpanningTree(retVal, startingVert, new HashSet<Vertex>(myVertices), null);
+
+		return retVal;
+	}
+
+	/*public void minimumSpanningTree(Graph graph, Vertex vert, Set<Vertex> remaining, Vertex parent) {
+		remaining.remove(vert);
+		graph.addVertex(vert);
+		if(parent != null) {
+			graph.addEdge(vert, parent);
+		}
+
+		for(Vertex adjacent: vert.adjacentVertices()) {
+			if(remaining.contains(adjacent)) {
+				minimumSpanningTree(graph,adjacent,remaining,vert);
+			}
+		}
+
+	}*/
+
+	@Override
+	public String toString() {
+		return myVertices + "    " + myEdges;
+	}
 }

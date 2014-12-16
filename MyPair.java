@@ -6,37 +6,51 @@ public class MyPair implements Pair {
     private int x;
     private int y;
 
+    public MyPair(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public MyPair() {}
+
+    @Override
+    public String toString() {
+        return "(" + x + "," + y + ")";
+    }
+
     /**
-     * @return the x location of this pair 
+     * @return the x location of this pair
      */
     @Override
-    public int getX( ) {
+    public int getX() {
         return x;
     }
 
     /**
      * sets x to the newVal
+     *
      * @param the new x for MyPair
      */
     @Override
-    public void setX( int newVal ) {
+    public void setX(int newVal) {
         x = newVal;
     }
 
     /**
-     * @return the y location of this pair 
+     * @return the y location of this pair
      */
     @Override
-    public int getY( ) {
+    public int getY() {
         return y;
     }
 
     /**
      * sets y to the newVal
+     *
      * @param the new y for MyPair
      */
     @Override
-    public void setY( int newVal ) {
+    public void setY(int newVal) {
         y = newVal;
     }
 }

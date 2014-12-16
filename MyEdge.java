@@ -32,11 +32,20 @@ public class MyEdge implements Edge {
         element = e;
     }
 
+    @Override
+    public String toString() {
+        String retVal = "";
+        for(Vertex vert :vertices()) {
+            retVal += vert.getElement();
+        }
+        return element + "@" +retVal;
+    }
+
     /**
      * @return the vertices of MyEdge
      */
     @Override
     public ArrayList<Vertex> vertices() {
-        return null;
+        return myVertices;
     }
 }

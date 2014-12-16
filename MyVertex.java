@@ -18,7 +18,12 @@ public class MyVertex implements Vertex {
 		element = new MyPair( );
 	}
 
-	/**
+    @Override
+    public String toString() {
+        return "<" + element.toString() + ": " + myEdges + ">";
+    }
+
+    /**
 	 * gets the element of MyVertex (the x/y location)
 	 * @return the element of MyVertex
 	 */
@@ -29,7 +34,7 @@ public class MyVertex implements Vertex {
 
     /**
      * sets the element of MyVertex
-     * @param the new pair to be added to MyVertex
+     * @param e the new pair to be added to MyVertex
      */
     @Override
     public void setElement(Pair e) {

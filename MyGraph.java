@@ -287,8 +287,6 @@ public class MyGraph implements Graph {
     @Override
     public Graph minimumSpanningTree( ) {
 
-		//List<Vertex> vertices = new ArrayList<Vertex>(myVertices);
-
 		Graph retVal = new MyGraph();
 
 		Map.Entry<Vertex,Vertex> current = new AbstractMap.SimpleEntry<Vertex, Vertex>(myVertices.get(0),null);
@@ -298,7 +296,7 @@ public class MyGraph implements Graph {
 		Stack<Map.Entry<Vertex,Vertex>> stack = new Stack<Map.Entry<Vertex, Vertex>>();
 		stack.push(current);
 
-		//remaining.remove(current);
+
 
 		while(!stack.isEmpty()) {
 			current = stack.pop();

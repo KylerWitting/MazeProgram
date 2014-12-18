@@ -174,8 +174,26 @@ public class MyMaze implements Maze {
 		for(int x = 0; x < visited.length ; x++) {
 			for (int y = 0; y < visited[0].length ; y++) {
 				if ( !visited[x][y] ) {
-					if ( x != 0 ) {
-						mazeGraph.addEdge(backing[x][y], backing[x - 1][y]);
+					if ( x == 1 || x == 2 || x == 3 ) {
+						if ( y != 0 )
+							mazeGraph.addEdge(backing[x][y], backing[x][y - 1]);
+						else
+							mazeGraph.addEdge(backing[x][y], backing[x - 1][y]);
+						visited[x][y] = true;
+					}					
+					else if ( x != 0 ) {
+						Random rand = new Random();
+						int r = rand.nextInt( 3 );
+						if ( r == 1 && y != 0 ) { 
+							mazeGraph.addEdge(backing[x][y], backing[x][y - 1]);
+						}
+						else if ( r == 2 && y != visited[0].length -1 ) {
+							mazeGraph.addEdge(backing[x][y], backing[x][y + 1]);
+						}
+						else {
+							mazeGraph.addEdge(backing[x][y], backing[x - 1][y]);
+						}
+						
 						visited[x][y] = true;
 					}
 					else if ( x != visited.length -1 ) {
@@ -191,7 +209,7 @@ public class MyMaze implements Maze {
 						visited[x][y] = true;
 					}
 				}
-					
+
 			}
 		}
 	}

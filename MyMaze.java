@@ -25,6 +25,10 @@ public class MyMaze implements Maze {
      */
     @Override
     public void generateMaze(int rows, int columns) {
+
+        if ( rows < 2 || columns < 2) {
+            return;
+        }
         backing = new Vertex[rows][columns];
 
         for (int rowIndex = 0; rowIndex < rows; rowIndex++) {

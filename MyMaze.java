@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -15,9 +14,9 @@ public class MyMaze implements Maze {
 	Vertex start;
 	Vertex finish;
 
-    public MyMaze( ) {
-        mazeGraph = new MyGraph();
-    }
+	public MyMaze( ) {
+		mazeGraph = new MyGraph();
+	}
 
 	/**
 	 * Returns a random maze with the specified number of rows and columns
@@ -59,73 +58,108 @@ public class MyMaze implements Maze {
 			}
 		}
 		generate( startRow, 0 );
+		vertCheck( );
 		if ( !checkGraph( rows, columns ) )
-			System.out.println( "Making the maze faile" );
-		// TODO Map this out and store to graph
+			System.out.println( "Making the maze failed" );
 
 
 	}
 	private void generate( int x, int y) {
 		visited[x][y] = true;
-		while (!visited[x][y+1] || !visited[x+1][y] || !visited[x][y-1] || !visited[x-1][y]) {
+		//while (!visited[x][y+1] || !visited[x+1][y] || !visited[x][y-1] || !visited[x-1][y]) {
+		Random rand = new Random();
+		int r = rand.nextInt( 4 );
 
-			while (true) {
-				Random rand = new Random();
-				int r = rand.nextInt( 4 );
-				//up
-				if (r == 0) {
-                    if(y > visited [0].length - 1) {
-
-                    }
-                    if(!visited[x][y+1]) {
-                        mazeGraph.addEdge(backing[x][y], backing[x][y + 1]);
-                        generate(x, y + 1);
-                        if (!visited[x][y - 1]) {
-                            generate(x, y - 1);
-                        }
-                        break;
-                    }
+		//right
+		if (r == 0) {
+			if ( y == 0 ) {
+				if(!visited[x][y+1]) {
+					mazeGraph.addEdge(backing[x][y], backing[x][y + 1]);
+					generate(x, y + 1);
 				}
-				//right
-				else if (r == 1 ) {
-                    if(x > visited [0].length - 1) {
-
-                    }
-                    if(!visited[x+1][y]) {
-                        mazeGraph.addEdge(backing[x][y], backing[x + 1][y]);
-                        generate(x + 1, y);
-                        if (!visited[x - 1][y]) {
-                            generate(x - 1, y);
-                        }
-                        break;
-                    }
+			}
+			else if ( y == visited [0].length - 1 ) {
+				generate( x, y );
+			}
+			else {
+				if(!visited[x][y+1]) {
+					mazeGraph.addEdge(backing[x][y], backing[x][y + 1]);
+					generate(x, y + 1);
 				}
-				//down
-				else if (r == 2 ) {
-                    if(y - 1 < 0) {
-
-                    }
-                    if(!visited[x][y-1]) {
-                        mazeGraph.addEdge(backing[x][y], backing[x][y - 1]);
-                        generate(x, y - 1);
-                        if (!visited[x][y + 1]) {
-                            generate(x, y + 1);
-                        }
-                        break;
-                    }
-				}
-				//left
-				else if (r == 3 && !visited[x-1][y]) {
-                    if(x - 1 < 0) {
-                        mazeGraph.addEdge(backing[x][y], backing[x - 1][y]);
-                        generate(x - 1, y);
-                        if (!visited[x + 1][y]) {
-                            generate(x + 1, y);
-                        }
-                    }
+				if (!visited[x][y - 1]) {
+					mazeGraph.addEdge(backing[x][y], backing[x][y - 1]);
+					generate(x, y - 1);
 				}
 			}
 		}
+		//down
+		else if (r == 1 ) {
+			if ( x == 0 ) {
+				if(!visited[x+1][y]) {
+					mazeGraph.addEdge(backing[x][y], backing[x + 1][y]);
+					generate(x + 1, y);
+				}
+			}
+			else if ( x == visited.length - 1 ) {
+				generate( x, y );
+			}
+			else {
+				if(!visited[x+1][y]) {
+					mazeGraph.addEdge(backing[x][y], backing[x + 1][y]);
+					generate(x + 1, y);
+				}
+				if (!visited[x - 1][y]) {
+					mazeGraph.addEdge(backing[x][y], backing[x - 1][y]);
+					generate(x - 1, y);
+				}
+			}
+		}
+		//left
+		else if (r == 2 ) {
+			if ( y == visited [0].length - 1 ) {
+				if(!visited[x][y-1]) {
+					mazeGraph.addEdge(backing[x][y], backing[x][y - 1]);
+					generate(x, y - 1);
+				}
+			}
+			else if ( y == 0 ) {
+				generate( x, y );
+			}
+			else {
+				if(!visited[x][y-1]) {
+					mazeGraph.addEdge(backing[x][y], backing[x][y - 1]);
+					generate(x, y - 1);
+				}
+				if (!visited[x][y + 1]) {
+					mazeGraph.addEdge(backing[x][y], backing[x][y + 1]);
+					generate(x, y + 1);
+				}
+			}
+		}
+		//up
+		else if ( r == 3 ) {
+			if ( x == visited.length - 1 ) {
+				if(!visited[x-1][y]) {
+					mazeGraph.addEdge(backing[x][y], backing[x - 1][y]);
+					generate(x - 1, y);
+				}
+			}
+			else if ( x == 0 ) {
+				generate( x, y );
+			}
+			else {
+				if(!visited[x-1][y]) {
+					mazeGraph.addEdge(backing[x][y], backing[x - 1][y]);
+					generate(x - 1, y);
+				}
+				if (!visited[x + 1][y]) {
+					mazeGraph.addEdge(backing[x][y], backing[x + 1][y]);
+					generate(x + 1, y);
+				}
+
+			}
+		}
+
 	}
 	private boolean checkGraph(int rows, int columns ) {
 		for(int rowIndex = 0; rowIndex < rows; rowIndex++) {
@@ -135,6 +169,31 @@ public class MyMaze implements Maze {
 			}
 		}
 		return true;
+	}
+	private void vertCheck( ) {
+		for(int x = 0; x < visited.length ; x++) {
+			for (int y = 0; y < visited[0].length ; y++) {
+				if ( !visited[x][y] ) {
+					if ( x != 0 ) {
+						mazeGraph.addEdge(backing[x][y], backing[x - 1][y]);
+						visited[x][y] = true;
+					}
+					else if ( x != visited.length -1 ) {
+						mazeGraph.addEdge(backing[x][y], backing[x + 1][y]);
+						visited[x][y] = true;
+					}
+					else if( y != 0 ) {
+						mazeGraph.addEdge(backing[x][y], backing[x][y - 1]);
+						visited[x][y] = true;
+					}
+					else {
+						mazeGraph.addEdge(backing[x][y], backing[x][y + 1]);
+						visited[x][y] = true;
+					}
+				}
+					
+			}
+		}
 	}
 
 	/**

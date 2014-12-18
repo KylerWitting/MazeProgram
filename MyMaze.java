@@ -26,26 +26,15 @@ public class MyMaze implements Maze {
 	public void generateMaze(int rows, int columns) {
 		backing = new Vertex[rows][columns];
 
-		// Draws Square graph temp
 		for(int rowIndex = 0; rowIndex < rows; rowIndex++) {
 			for (int colIndex = 0; colIndex < columns; colIndex++) {
 				MyVertex myVertex = new MyVertex();
 				myVertex.setElement(new MyPair(rowIndex,colIndex));
 				backing [rowIndex][colIndex] = myVertex;
 				mazeGraph.addVertex(myVertex);
-				/*if(rowIndex != 0) {
-                    temp.addEdge(backing[rowIndex - 1][colIndex], myVertex);
-                }
-                if(colIndex != 0) {
-                    temp.addEdge( backing[rowIndex][colIndex - 1], myVertex);
-                }*/
 			}
 		}
 
-
-		/*List<Edge> edges = new ArrayList<Edge>(temp.edges());
-        List<Vertex> vertices = temp.vertices();
-        temp.edges().clear();*/
 		Random rand = new Random() ;
 		int startRow = rand.nextInt(rows);
 		start = backing [startRow][0];

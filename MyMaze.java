@@ -2,7 +2,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Created by Snake on 12/14/2014.
+ * This implements the class Maze. 
+ *
+ * @author Kyler Witting
+ * @author Jeff Spragg
+ * 
+ * CS2321 Data Structures
+ * Fall 2014
  */
 public class MyMaze implements Maze {
 
@@ -14,6 +20,9 @@ public class MyMaze implements Maze {
     Vertex start;
     Vertex finish;
 
+    /**
+     * Constructor for MyMaze
+     */
     public MyMaze() {
         mazeGraph = new MyGraph();
     }
@@ -53,15 +62,15 @@ public class MyMaze implements Maze {
         }
         generate(startRow, 0);
         vertCheck();
-        if (!checkGraph(rows, columns))
-            System.out.println("Making the maze failed");
-
-
     }
 
+    /**
+     * Generates a random Maze, one vertex at a time
+     * @param x - the x location of the current vertex
+     * @param y - the y location of the current vertex
+     */
     private void generate(int x, int y) {
         visited[x][y] = true;
-        //while (!visited[x][y+1] || !visited[x+1][y] || !visited[x][y-1] || !visited[x-1][y]) {
         Random rand = new Random();
         int r = rand.nextInt(4);
 
@@ -149,16 +158,10 @@ public class MyMaze implements Maze {
 
     }
 
-    private boolean checkGraph(int rows, int columns) {
-        for (int rowIndex = 0; rowIndex < rows; rowIndex++) {
-            for (int colIndex = 0; colIndex < columns; colIndex++) {
-                if (!visited[rowIndex][colIndex])
-                    return false;
-            }
-        }
-        return true;
-    }
-
+    /**
+     * Checks to make sure that every vertex of the maze is attached to the maze
+     * Automatically corrects vertices that aren't attached. 
+     */
     private void vertCheck() {
         for (int x = 0; x < visited.length; x++) {
             for (int y = 0; y < visited[0].length; y++) {
@@ -179,7 +182,6 @@ public class MyMaze implements Maze {
                         } else {
                             mazeGraph.addEdge(backing[x][y], backing[x - 1][y]);
                         }
-
                         visited[x][y] = true;
                     } else if (x != visited.length - 1) {
                         mazeGraph.addEdge(backing[x][y], backing[x + 1][y]);

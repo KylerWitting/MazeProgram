@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import static org.junit.Assert.fail;
 
 /**
- * This class tests MyMaze class
+ * This tests the class MyMaze. 
  *
- * @author CS2321 Data Structures
- *         Fall 2014
+ * @author Kyler Witting
+ * @author Jeff Spragg
+ * 
+ * CS2321 Data Structures
+ * Fall 2014
  */
 
 public class MyMazeTest {

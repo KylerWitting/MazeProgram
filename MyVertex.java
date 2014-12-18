@@ -1,7 +1,13 @@
 import java.util.ArrayList;
 
 /**
- * Created by Snake on 12/14/2014.
+ * This implements the class Vertex. 
+ *
+ * @author Kyler Witting
+ * @author Jeff Spragg
+ * 
+ * CS2321 Data Structures
+ * Fall 2014
  */
 public class MyVertex implements Vertex {
 

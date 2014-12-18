@@ -1,7 +1,13 @@
 import java.util.*;
 
 /**
- * Created by Snake on 12/14/2014.
+ * This implements the class Graph. 
+ *
+ * @author Kyler Witting
+ * @author Jeff Spragg
+ * 
+ * CS2321 Data Structures
+ * Fall 2014
  */
 public class MyGraph implements Graph {
 
@@ -260,15 +266,12 @@ public class MyGraph implements Graph {
                 distance.put(vert, Integer.MAX_VALUE);
                 previous.put(vert, null);
             }
-            //queue.add(vert);
         }
         distance.put(v1, 0);
         queue.add(v1);
 
         while (!queue.isEmpty()) {
             Vertex current = queue.remove();
-
-            // dump
             if (current.equals(v2)) {
                 ArrayList<Vertex> retVal = new ArrayList<Vertex>();
                 while (previous.get(current) != null) {
@@ -280,8 +283,6 @@ public class MyGraph implements Graph {
             }
 
             for (Vertex adjacent : current.adjacentVertices()) {
-                //System.out.println(adjacent + " " + current);
-                //if (distance.get(current) + 1 < distance.get(adjacent)) {
                 if (distance.get(adjacent) == Integer.MAX_VALUE) {
                     distance.put(adjacent, distance.get(current) + 1);
                     previous.put(adjacent, current);
@@ -316,7 +317,7 @@ public class MyGraph implements Graph {
                 newVertex.setElement(current.getKey().getElement());
                 remaining.remove(current.getKey());
                 retVal.addVertex(newVertex);
-                if (current.getValue() != null) {
+                if ( current.getValue() != null ) {
                     retVal.addEdge(newVertex, current.getValue());
                 }
                 for (Vertex vert : current.getKey().adjacentVertices()) {
@@ -324,29 +325,14 @@ public class MyGraph implements Graph {
                 }
             }
         }
-
-        //minimumSpanningTree(retVal, startingVert, new HashSet<Vertex>(myVertices), null);
-
         return retVal;
     }
 
-	/*public void minimumSpanningTree(Graph graph, Vertex vert, Set<Vertex> remaining, Vertex parent) {
-        remaining.remove(vert);
-		graph.addVertex(vert);
-		if(parent != null) {
-			graph.addEdge(vert, parent);
-		}
-
-		for(Vertex adjacent: vert.adjacentVertices()) {
-			if(remaining.contains(adjacent)) {
-				minimumSpanningTree(graph,adjacent,remaining,vert);
-			}
-		}
-
-	}*/
-
+    /**
+     * inherits toString
+     */
     @Override
-    public String toString() {
+    public String toString( ) {
         return myVertices + "    " + myEdges;
     }
 }

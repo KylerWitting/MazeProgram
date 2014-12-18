@@ -1,7 +1,13 @@
 import java.util.ArrayList;
 
 /**
- * Created by Snake on 12/14/2014.
+ * This implements the class Edge. 
+ *
+ * @author Kyler Witting
+ * @author Jeff Spragg
+ * 
+ * CS2321 Data Structures
+ * Fall 2014
  */
 public class MyEdge implements Edge {
 
@@ -33,6 +39,9 @@ public class MyEdge implements Edge {
         element = e;
     }
 
+    /**
+     * inherits from object toString 
+     */
     @Override
     public String toString() {
         String retVal = "";

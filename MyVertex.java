@@ -49,6 +49,19 @@ public class MyVertex implements Vertex {
         return myEdges;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof MyVertex) {
+            MyVertex other = (MyVertex) obj;
+            if(other.element.getX() == element.getX()) {
+                if(other.element.getY() == element.getY()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     /**
      * @return the adjacent vertices to this MyVertex
      */

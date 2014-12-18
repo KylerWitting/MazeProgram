@@ -13,18 +13,28 @@ public class Main extends JPanel {
    
    MyMaze maze = null;
    ArrayList<Vertex> path = null;
-   int rows = 10;
-   int columns = 10;
+   int rows = 50;
+   int columns = 50;
    
    public Main( ) {
       maze = new MyMaze();
       maze.generateMaze( rows, columns );
-      //path = maze.solveMaze( );
+      path = maze.solveMaze();
       JFrame frame = new JFrame( "CS2321 Final Program Maze");
       frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-      frame.setSize( 1024, 768 );
-      frame.setContentPane( this );
-      frame.setVisible( true );
+      frame.setSize(1024, 768);
+      frame.setContentPane(this);
+      frame.setVisible(true);
+      /*Thread thread = new Thread(new Runnable() {
+         @Override
+         public void run() {
+            //path = maze.solveMaze();
+            System.out.println("Finished shit");
+         }
+      },"path thread");*/
+      //thread.start();
+      //System.out.println(path);
+
    }
    
    public void paintComponent( Graphics g ) {
@@ -76,6 +86,7 @@ public class Main extends JPanel {
             }
          }
       }
+
    }
 
    public static void main( String[ ] args ) {

@@ -248,16 +248,17 @@ public class MyGraph implements Graph {
 		for (Vertex vert : myVertices) {
 			if (!vert.equals(v1)) {
 				distance.put(vert, Integer.MAX_VALUE);
-				previous.put(vert,null);
+				previous.put(vert, null);
 			}
-			else {
-				distance.put(vert, 0);
-			}
-			queue.add(vert);
+			//queue.add(vert);
 		}
+		distance.put(v1,0);
+		queue.add(v1);
 
 		while (!queue.isEmpty()) {
 			Vertex current = queue.remove();
+
+			// dump
 			if (current.equals(v2)) {
 				ArrayList<Vertex> retVal = new ArrayList<Vertex>();
 				while (previous.get(current) != null) {
@@ -270,7 +271,8 @@ public class MyGraph implements Graph {
 
 			for (Vertex adjacent: current.adjacentVertices()) {
 				//System.out.println(adjacent + " " + current);
-				if (distance.get(current) + 1 < distance.get(adjacent)) {
+				//if (distance.get(current) + 1 < distance.get(adjacent)) {
+				if(distance.get(adjacent) == Integer.MAX_VALUE) {
 					distance.put(adjacent, distance.get(current) + 1);
 					previous.put(adjacent, current);
 					queue.add(adjacent);
@@ -289,6 +291,7 @@ public class MyGraph implements Graph {
 
 		Graph retVal = new MyGraph();
 
+		// a new entry key is the vertex in question, value is its connection to the rest of the tree
 		Map.Entry<Vertex,Vertex> current = new AbstractMap.SimpleEntry<Vertex, Vertex>(myVertices.get(0),null);
 
 		HashSet<Vertex> remaining = new HashSet<Vertex> (myVertices);
@@ -296,18 +299,18 @@ public class MyGraph implements Graph {
 		Stack<Map.Entry<Vertex,Vertex>> stack = new Stack<Map.Entry<Vertex, Vertex>>();
 		stack.push(current);
 
-
-
 		while(!stack.isEmpty()) {
 			current = stack.pop();
 			if(remaining.contains(current.getKey())) {
+				Vertex newVertex = new MyVertex();
+				newVertex.setElement(current.getKey().getElement());
 				remaining.remove(current.getKey());
-				retVal.addVertex(current.getKey());
-				if(current.getValue()!=null) {
-					retVal.addEdge(current.getKey(),current.getValue());
+				retVal.addVertex(newVertex);
+				if(current.getValue()!= null) {
+					retVal.addEdge(newVertex,current.getValue());
 				}
 				for(Vertex vert: current.getKey().adjacentVertices()) {
-					stack.push(new AbstractMap.SimpleEntry<Vertex, Vertex>(vert,current.getKey()));
+					stack.push(new AbstractMap.SimpleEntry<Vertex, Vertex>(vert,newVertex));
 				}
 			}
  		}

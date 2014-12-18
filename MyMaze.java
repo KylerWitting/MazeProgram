@@ -150,6 +150,7 @@ public class MyMaze implements Maze {
 		}
 
 	}
+
 	private boolean checkGraph(int rows, int columns ) {
 		for(int rowIndex = 0; rowIndex < rows; rowIndex++) {
 			for (int colIndex = 0; colIndex < columns; colIndex++) {

@@ -1,17 +1,14 @@
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 import java.util.ArrayList;
 
-import org.junit.Test;
+import static org.junit.Assert.fail;
 
-/** 
- * 
+/**
  * This class tests MyMaze class
- * @author  
- * 
- * CS2321 Data Structures 
- * Fall 2014 
- * 
+ *
+ * @author CS2321 Data Structures
+ *         Fall 2014
  */
 
 public class MyMazeTest {
@@ -24,20 +21,20 @@ public class MyMazeTest {
     public void testGenerateMaze() {
         Maze myMaze = new MyMaze();
 
-        myMaze.generateMaze(10,10);
+        myMaze.generateMaze(10, 10);
 
         ArrayList<Vertex> traversal = myMaze.solveMaze();
 
-        if(!traversal.get(0).equals(myMaze.startVertex())) {
+        if (!traversal.get(0).equals(myMaze.startVertex())) {
             fail("maze did not have a start");
         }
-        if(!traversal.get(traversal.size()-1).equals(myMaze.finishVertex())) {
+        if (!traversal.get(traversal.size() - 1).equals(myMaze.finishVertex())) {
             fail("maze did not have an end");
         }
 
         Graph graph = myMaze.toGraph();
 
-        if(graph.vertices().size() != 100) {
+        if (graph.vertices().size() != 100) {
             fail("maze did not have the correct number of vertices, found: " + graph.vertices().size());
         }
     }
@@ -48,27 +45,27 @@ public class MyMazeTest {
     @Test
     public void testSolveMaze() {
         Maze myMaze = new MyMaze();
-        
-        myMaze.generateMaze(10,10);
+
+        myMaze.generateMaze(10, 10);
 
         ArrayList<Vertex> traversal = myMaze.solveMaze();
 
-        if(!traversal.get(0).equals(myMaze.startVertex())) {
+        if (!traversal.get(0).equals(myMaze.startVertex())) {
             fail("solve did not start at the correct location");
         }
 
-        for(Vertex vert: traversal) {
-            if(traversal.indexOf(vert) == traversal.size()-1) {
-                if(!vert.equals(myMaze.finishVertex())) {
+        for (Vertex vert : traversal) {
+            if (traversal.indexOf(vert) == traversal.size() - 1) {
+                if (!vert.equals(myMaze.finishVertex())) {
                     fail("did not reach end of maze");
                 }
                 break;
             }
-            if(!vert.adjacentVertices().contains(traversal.get(traversal.indexOf(vert)+1))) {
+            if (!vert.adjacentVertices().contains(traversal.get(traversal.indexOf(vert) + 1))) {
                 fail("Graph made an illegal jump");
             }
         }
-        
+
     }
 
     /**
@@ -78,13 +75,13 @@ public class MyMazeTest {
     public void testToGraph() {
         Maze myMaze = new MyMaze();
 
-        myMaze.generateMaze(10,10);
+        myMaze.generateMaze(10, 10);
         if (myMaze.toGraph() == null) {
             fail("tograph returned null");
         }
 
         Graph graph = myMaze.toGraph();
-        if(graph.vertices().size() != 100) {
+        if (graph.vertices().size() != 100) {
             fail("graph didn't have all of it's vertices");
         }
 
@@ -101,19 +98,19 @@ public class MyMazeTest {
     public void testToArray() {
 
         Maze myMaze = new MyMaze();
-        myMaze.generateMaze(10,10);
-        Vertex [][] doubleArray = myMaze.toArray();
+        myMaze.generateMaze(10, 10);
+        Vertex[][] doubleArray = myMaze.toArray();
 
-        for(int x = 0; x < doubleArray.length; x ++) {
-            for(int y = 0; y < doubleArray[x].length; y++) {
-                if(doubleArray[x][y] == null) {
-                    fail("array was nulled at " +x + " " + y);
+        for (int x = 0; x < doubleArray.length; x++) {
+            for (int y = 0; y < doubleArray[x].length; y++) {
+                if (doubleArray[x][y] == null) {
+                    fail("array was nulled at " + x + " " + y);
                 }
                 Pair pair = doubleArray[x][y].getElement();
-                if(pair.getX() != x) {
+                if (pair.getX() != x) {
                     fail("disorganized the maze when generating");
                 }
-                if(pair.getY() != y) {
+                if (pair.getY() != y) {
                     fail("disorganized the maze when generating");
                 }
             }
@@ -127,18 +124,19 @@ public class MyMazeTest {
     public void testStartVertex() {
         Maze myMaze = new MyMaze();
 
-        myMaze.generateMaze(10,10);
+        myMaze.generateMaze(10, 10);
 
         ArrayList<Vertex> traversal = myMaze.solveMaze();
 
-        if(myMaze.startVertex() == null) {
+        if (myMaze.startVertex() == null) {
             fail("did not generate a start vertex");
 
-        }if(myMaze.startVertex() == myMaze.finishVertex()) {
+        }
+        if (myMaze.startVertex() == myMaze.finishVertex()) {
             fail("chose starting and ending vertex to be the same value");
         }
 
-        if(!traversal.get(0).equals(myMaze.startVertex())) {
+        if (!traversal.get(0).equals(myMaze.startVertex())) {
             fail("solve did not start at the correct location");
         }
 
@@ -152,19 +150,20 @@ public class MyMazeTest {
     public void testFinishVertex() {
         Maze myMaze = new MyMaze();
 
-        myMaze.generateMaze(10,10);
+        myMaze.generateMaze(10, 10);
 
         ArrayList<Vertex> traversal = myMaze.solveMaze();
 
-        if(myMaze.finishVertex() == null) {
+        if (myMaze.finishVertex() == null) {
             fail("did not generate a start vertex");
 
-        }if(myMaze.startVertex() == myMaze.finishVertex()) {
+        }
+        if (myMaze.startVertex() == myMaze.finishVertex()) {
             fail("chose starting and ending vertex to be the same value");
         }
 
         Vertex vertex = traversal.get(traversal.size() - 1);
-        if(!vertex.equals(myMaze.finishVertex())) {
+        if (!vertex.equals(myMaze.finishVertex())) {
             fail("solve did not end at the correct location got:" + vertex + " should've been " + myMaze.finishVertex());
         }
     }

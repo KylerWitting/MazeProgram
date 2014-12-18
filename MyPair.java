@@ -11,7 +11,8 @@ public class MyPair implements Pair {
         this.y = y;
     }
 
-    public MyPair() {}
+    public MyPair() {
+    }
 
     @Override
     public String toString() {
@@ -29,7 +30,7 @@ public class MyPair implements Pair {
     /**
      * sets x to the newVal
      *
-     * @param the new x for MyPair
+     * @param newVal the new x for MyPair
      */
     @Override
     public void setX(int newVal) {
@@ -47,7 +48,7 @@ public class MyPair implements Pair {
     /**
      * sets y to the newVal
      *
-     * @param the new y for MyPair
+     * @param newVal the new y for MyPair
      */
     @Override
     public void setY(int newVal) {

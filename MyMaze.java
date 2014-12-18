@@ -68,30 +68,36 @@ public class MyMaze implements Maze {
 			while (true) {
 				Random rand = new Random();
 				int r = rand.nextInt( 4 );
-
 				//up
 				if (r == 0 && !visited[x][y+1]) {
 					mazeGraph.addEdge( backing[x][y], backing[x][y+1] );
 					generate(x, y + 1);
+					if ( !visited[x][y - 1] )
+						generate(x, y - 1);
 					break;
 				}
 				//right
 				else if (r == 1 && !visited[x+1][y]) {
 					mazeGraph.addEdge( backing[x][y], backing[x+1][y] );
-					generate(x+1, y);
+					generate(x + 1, y);
+					if ( !visited[x - 1][y] )
+						generate(x - 1, y);
 					break;
 				}
 				//down
 				else if (r == 2 && !visited[x][y-1]) {
 					mazeGraph.addEdge( backing[x][y], backing[x][y-1] );
-					generate(x, y-1);
+					generate(x, y - 1);
+					if ( !visited[x][y + 1] )
+						generate(x, y + 1);
 					break;
 				}
 				//left
 				else if (r == 3 && !visited[x-1][y]) {
 					mazeGraph.addEdge( backing[x][y], backing[x-1][y] );
-					generate(x-1, y);
-					break;
+					generate(x - 1, y);
+					if ( !visited[x + 1][y] )
+						generate(x + 1, y);
 				}
 			}
 		}
